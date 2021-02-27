@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{class.class_name}}{% endblock %}
+
+{% block content %}
+    <h2>{{class.class_name}}</h2>
+    <p>{{class.information}}</p>
+    <h2>Метеориты данного класса</h2>
+    {% if list %}
+        <ul>
+            {% for meteor in list %}
+                <li><a href="{% url 'meteorites:detail_met' meteor.meteorite_id%}">{{meteor.name}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+            Данные не найдены
+
+    {% endif %}
+
+{% endblock %}

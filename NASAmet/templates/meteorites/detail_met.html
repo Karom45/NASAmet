@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}{{meteor.name}}{% endblock %}
+
+{% block content %}
+    <h2>{{meteor.name}}</h2>
+    <a href="{% url 'meteorites:detail_class' meteor.recclass_id_id %}">{{meteor.recclass_id}}</a>
+    <p>Масса : {{meteor.mass}} гр.</p>
+    <p>Год падения : {{meteor.year.year}} г.</p>
+
+{% endblock %}

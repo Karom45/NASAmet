@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Список метеоритов{% endblock %}
+
+{% block content %}
+
+    {% if meteorites_list %}
+<ul>
+        {% for meteor in meteorites_list %}
+    <li><a href="{% url 'meteorites:detail_met' meteor.meteorite_id%}">{{meteor.name}}</a></li>
+        {% endfor %}
+    {% else %}
+        Данные не найдены
+</ul>
+    {% endif %}
+
+{% endblock %}

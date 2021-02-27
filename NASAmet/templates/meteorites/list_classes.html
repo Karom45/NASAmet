@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Классы{% endblock %}
+
+{% block content %}
+
+    {% if list %}
+<ul>
+    {% for class in list %}
+    <li><a href="{% url 'meteorites:detail_class' class.classes_id %}">{{class.class_name}}</a></li>
+        {% endfor %}
+    {% else %}
+        Данные не найдены
+</ul>
+    {% endif %}
+
+{% endblock %}
