@@ -10,7 +10,7 @@ class Classes(models.Model):
         verbose_name = 'Класс метеорита'
         verbose_name_plural = 'Классы метеоритов'
 
-    classes_id = models.IntegerField('id', primary_key=True, db_column='id')
+    classes_id = models.AutoField('id', primary_key=True, db_column='id' ,unique= True , default = 0)
     class_name = models.CharField('Название', max_length=100, db_column='class_name')
     information = models.TextField('Дополнительная информация', db_column='information')
 
@@ -25,16 +25,15 @@ class Meteorite(models.Model):
         verbose_name = 'Метеорит'
         verbose_name_plural = 'Метеориты'
 
-    meteorite_id = models.IntegerField('id' ,primary_key=True, db_column='id')
+    meteorite_id = models.AutoField('id' ,primary_key=True, db_column='id')
     name = models.CharField('Название метеорита' ,max_length=100, db_column='name')
     # recclass_id = models.IntegerField('Класс', db_column='recclass_id')
     recclass_id = models.ForeignKey('Classes' , db_column='recclass_id', on_delete = models.CASCADE)
     mass = models.FloatField('Масса', db_column='mass (g)')
     fall = models.CharField('Статус' , max_length=10, db_column='fall')
-    year = models.DateField('Дата', db_column='year')
+    year = models.IntegerField('Дата', db_column='year')
     reclat = models.FloatField('Широта',db_column='reclat')
     reclong = models.FloatField('Долгота', db_column='reclong')
-    geoLocation = models.CharField('Координаты',max_length=100, db_column='GeoLocation')
 
     def __str__(self):
         return self.name

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Добавление класса{% endblock %}
+
+{% block content %}
+<hr>
+<div>
+    <form action="{% url 'meteorites:add_meteorite' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="Введите название" name="name"><br>
+        <textarea name = 'add_inf' placeholder="Описание" cols = '30' rows = "10"></textarea>
+        <button class="btn btn-success" type = "submit">Добавить</button>
+    </form>
+</div>
+{% endblock %}
