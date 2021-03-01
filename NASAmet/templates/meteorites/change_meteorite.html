@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Добавление класса{% endblock %}
+
+{% block content %}
+<div>
+    <form action="{% url 'meteorites:change_meteorite' meteor.meteorite_id%}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="Введите название" name="name" value = {{meteor.name}}><br>
+        <select name = 'recclass_id_id'>
+            <option disabled>Класс метеорита</option>
+            {% for k,v in class_names.items %}
+                {% if k == meteor.recclass_id_id%}
+                    <option selected value={{k}}>{{v}}</option>
+                {% else %}
+                    <option value={{k}}>{{v}}</option>
+                {% endif %}
+            {% endfor %}
+        </select><br>
+        <input type="number" required placeholder="Введите массу" name="mass" value = {{mass}}><br>
+        <select name = 'fell'>
+            <option disabled>Статус</option>
+            {% if meteor.fall == 'Fell'%}}
+                <option selected value="Fell">Fell</option>
+                <option value="Found">Found</option>
+            {% else %}
+                <option value="Fell">Fell</option>
+                <option selected value="Found">Found</option>
+            {% endif %}
+        </select><br>
+        <input type="number" required placeholder="Введите год" name="year" value = {{meteor.year}}><br>
+        <input type="number" required placeholder="Введите широту" name="reclat" min= '-90' max = '90' step = '0.000001' value = {{reclat}}><br>
+        <input type="number" required placeholder="Введите долготу" name="reclong" min= '-180' max = '180'step = '0.000001' value = {{reclong}}><br>
+        <button class="btn btn-success" type = "submit">Добавить</button>
+    </form>
+</div>
+{% endblock %}
