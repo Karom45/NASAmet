@@ -12,4 +12,6 @@ urlpatterns = [
     path('add_class', views.add_class, name='add_class'),
     path('classes_list/<int:classes_id>/delete_class', views.delete_class, name='delete_class'),
     path('add_meteorite', views.add_meteorite, name='add_meteorite'),
+    path('meteorites_list/<int:meteor_id>/change_meteorite', views.change_meteorite, name='change_meteorite'),
+    path('meteorites_list/<int:meteor_id>/delete_meteorite', views.delete_meteorite, name='delete_meteorite'),
 ]

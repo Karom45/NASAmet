@@ -2,12 +2,25 @@
 {% block title %}Добавление класса{% endblock %}
 
 {% block content %}
-<hr>
 <div>
     <form action="{% url 'meteorites:add_meteorite' %}" method="POST">
         {% csrf_token %}
         <input type="text" required placeholder="Введите название" name="name"><br>
-        <textarea name = 'add_inf' placeholder="Описание" cols = '30' rows = "10"></textarea>
+        <select name = 'recclass_id_id'>
+            <option disabled>Класс метеорита</option>
+            {% for k,v in class_names.items %}
+                <option value={{k}}>{{v}}</option>
+            {% endfor %}
+        </select><br>
+        <input type="number" required placeholder="Введите массу" name="mass"><br>
+        <select name = 'fell'>
+            <option disabled>Статус</option>
+            <option value="Fell">Fell</option>
+            <option selected value="Found">Found</option>
+        </select><br>
+        <input type="number" required placeholder="Введите год" name="year" ><br>
+        <input type="number" required placeholder="Введите широту" name="reclat" min= '-90' max = '90' step = '0.000001'><br>
+        <input type="number" required placeholder="Введите долготу" name="reclong" min= '-180' max = '-180'step = '0.000001'><br>
         <button class="btn btn-success" type = "submit">Добавить</button>
     </form>
 </div>

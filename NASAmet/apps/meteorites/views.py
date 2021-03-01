@@ -55,10 +55,36 @@ def delete_class(request ,classes_id):
 
 
 def add_meteorite(request):
-    pass
+    all_classes = Classes.objects.all()
+    class_names = {a.classes_id:a.class_name for a in all_classes}
     if request.method == "POST":
         _id = Meteorite.objects.latest('meteorite_id').meteorite_id + 1
-        new_meteor = Meteorite(meteorite_id=_id, name=request.POST['class_name'], information=request.POST['add_inf'])
+        new_meteor = Meteorite(meteorite_id=_id, name=request.POST['name'],recclass_id_id=request.POST['recclass_id_id'],
+                               mass=request.POST['mass'], fall=request.POST['fell'],
+                               year=request.POST['year'], reclat=request.POST['reclat'], reclong=request.POST['reclong'])
         new_meteor.save()
         return HttpResponseRedirect(reverse('meteorites:classes_list'))
-    return render(request, 'meteorites/add_class.html')
+    return render(request, 'meteorites/add_meteorite.html', {'class_names':class_names})
+
+
+def change_meteorite(request ,meteor_id):
+    meteor = get_object_or_404(Meteorite, pk=meteor_id)
+    all_classes = Classes.objects.all()
+    class_names = {a.classes_id: a.class_name for a in all_classes}
+    if request.method == "POST":
+        meteor.name=request.POST['name']
+        meteor.recclass_id_id=request.POST['recclass_id_id']
+        meteor.mass=request.POST['mass']
+        meteor.fall=request.POST['fell']
+        meteor.year=request.POST['year']
+        meteor.reclat=request.POST['reclat']
+        meteor.reclong=request.POST['reclong']
+        meteor.save()
+        return HttpResponseRedirect(reverse('meteorites:detail_met' , args=(meteor.meteorite_id,)))
+    return render(request, 'meteorites/change_meteorite.html',{'meteor': meteor,'class_names': class_names,
+                                                               'mass': int(meteor.mass) , 'reclat' : str(meteor.reclat),'reclong' : str(meteor.reclong)})
+
+def delete_meteorite(request ,meteor_id):
+    meteor = get_object_or_404(Meteorite, pk=meteor_id)
+    meteor.delete()
+    return HttpResponseRedirect(reverse('meteorites:meteorites_list'))
