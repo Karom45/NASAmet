@@ -2,17 +2,49 @@
 {% block title %}{{meteor.name}}{% endblock %}
 
 {% block content %}
-<div>
-    <h2>{{meteor.name}}</h2>
-    <a href="{% url 'meteorites:detail_class' meteor.recclass_id_id %}">{{meteor.recclass_id}}</a>
-    <p>Масса : {{meteor.mass}} гр.</p>
-    <p>Год падения : {{meteor.year}} г.</p>
-    <p>Статус : {{meteor.fall}}</p>
-    <p>Координаты : ({{meteor.reclat}} , {{meteor.reclong}})</p>
-    <a class="btn btn-success mr-2" href="{% url 'meteorites:change_meteorite' meteor.meteorite_id %}" role="button">Изменить</a>
-     <form action="{% url 'meteorites:delete_meteorite' meteor.meteorite_id %}" method="POST">
-         {% csrf_token %}
-            <button class="btn btn-danger" type = "submit">Удалить</button>
-     </form>
+<div class="container-fluid pt-5">
+    <h2 class="mb-4">{{meteor.name}}</h2>
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <label class="text-muted mb-0">Класс</label>
+                <h6><a href="{% url 'meteorites:detail_class' meteor.recclass_id_id %}">{{meteor.recclass_id}}</a></h6>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label class="text-muted mb-0">Масса</label>
+                <h6>{{meteor.mass}} гр.</h6>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label class="text-muted mb-0">Дата падения</label>
+                <h6>{{meteor.year}}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-2">
+            <div class="form-group">
+                <label class="text-muted mb-0">Статус</label>
+                <h6>{{meteor.fall}}</h6>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label class="text-muted mb-0">Координаты</label>
+                <h6>({{meteor.reclat}}; {{meteor.reclong}})</h6>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex">
+         <a class="btn btn-success mr-2" href="{% url 'meteorites:change_meteorite' meteor.meteorite_id %}" role="button">Изменить</a>
+         <form action="{% url 'meteorites:delete_meteorite' meteor.meteorite_id %}" method="POST">
+             {% csrf_token %}
+                <button class="btn btn-danger" type = "submit">Удалить</button>
+         </form>
+    </div>
+
 </div>
     {% endblock %}

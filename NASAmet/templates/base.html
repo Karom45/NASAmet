@@ -8,8 +8,8 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'meteorites:index' %}">Метеориты NASA</a>
+  <div class="container-fluid px-0">
+    <a class="navbar-brand" href="{% url 'meteorites:meteorites_list' %}">Метеориты NASA</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,14 +19,13 @@
           <a class="nav-link active" aria-current="page" href="{% url 'meteorites:meteorites_list' %}">Метеориты</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'meteorites:classes_list' %}">Классы метеоритов</a>
+          <a class="nav-link active" href="{% url 'meteorites:classes_list' %}">Классы метеоритов</a>
         </li>
       </ul>
       {% if user.is_authenticated %}
-        <h2>Welcome, {{ user.username }}!</h2>
+        <h4 class="text-white mr-3">{{ user.username }}</h4>
         <a class="btn btn-success" href="{% url 'logout' %}" role="button">Log out</a>
       {% else %}
-        <h2>You are not logged in.</h2>
         <a class="btn btn-success mr-2" href="{% url 'login' %}" role="button">Log in</a>
         <a class="btn btn-success" href="{% url 'accounts:signup' %}" role="button">Sign up</a>
       {% endif %}
