@@ -2,26 +2,38 @@
 {% block title %}{{class.class_name}}{% endblock %}
 
 {% block content %}
-<div>
-    <h2>{{class.class_name}}</h2>
-    <p>{{class.information}}</p>
-    <a class="btn btn-success mr-2" href="{% url 'meteorites:change_class' class.classes_id %}" role="button">Изменить</a>
-     <form action="{% url 'meteorites:delete_class' class.classes_id %}" method="POST">
-         {% csrf_token %}
-            <button class="btn btn-danger" type = "submit">Удалить</button>
-     </form>
-</div>
-<div>
-    <h2>Метеориты данного класса</h2>
-    {% if list %}
-        <ul>
-            {% for meteor in list %}
-                <li><a href="{% url 'meteorites:detail_met' meteor.meteorite_id%}">{{meteor.name}}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-            Данные не найдены
+<div class="container-fluid pt-5">
+    <div>
+        <div class="d-flex mb-1 align-items-end">
+            <div class="form-group mb-0 mr-5">
+                <span class="text-muted">Класс метеоритов</span>
+                <h2 class="mb-0">{{class.class_name}}</h2>
+            </div>
+            {% if user.is_authenticated %}
+             <a class="btn btn-success mr-2" href="{% url 'meteorites:change_class' class.classes_id %}" role="button">Изменить</a>
+             <form action="{% url 'meteorites:delete_class' class.classes_id %}" method="POST">
+                 {% csrf_token %}
+                    <button class="btn btn-danger" type = "submit">Удалить</button>
+             </form>
+            {% endif %}
+        </div>
 
-    {% endif %}
+        <p class="text-muted mb-4">{{class.information}}</p>
+
+    </div>
+    <div class="pt-4">
+        <h4 class="mb-3">Метеориты данного класса</h4>
+        {% if list %}
+            <div class="d-flex flex-wrap">
+                {% for meteor in list %}
+                    <a class="border rounded p-3 mr-3 mb-3" href="{% url 'meteorites:detail_met' meteor.meteorite_id%}">{{meteor.name}}</a>
+                {% endfor %}
+            </div>
+        {% else %}
+                Данные не найдены
+
+        {% endif %}
+    </div>
 </div>
+
 {% endblock %}

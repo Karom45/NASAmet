@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from NASAmet.apps.accounts.views import redirect_view
+
 urlpatterns = [
+
     path('grappelli/', include('grappelli.urls')),# grappelli URLS
     path('admin/', admin.site.urls),
     path('meteorites/', include('meteorites.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
+    path('', redirect_view)
 ]

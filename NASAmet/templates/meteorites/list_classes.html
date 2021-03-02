@@ -4,13 +4,15 @@
 {% block content %}
 
     {% if list %}
-<ul>
+<div class="list-group">
     {% for class in list %}
-    <li><a href="{% url 'meteorites:detail_class' class.classes_id %}">{{class.class_name}}</a></li>
+    <a class="list-group-item list-group-item-action text-primary" href="{% url 'meteorites:detail_class' class.classes_id %}">{{class.class_name}}</a>
         {% endfor %}
     {% else %}
         Данные не найдены
-</ul>
+</div>
     {% endif %}
+{% if user.is_authenticated %}
 <a class="btn btn-success" href="{% url 'meteorites:add_class' %}" role="button">Добавить</a>
+{% endif %}
 {% endblock %}

@@ -4,13 +4,15 @@
 {% block content %}
 
     {% if meteorites_list %}
-<ul>
+<ul class="list-group">
         {% for meteor in meteorites_list %}
-    <li><a href="{% url 'meteorites:detail_met' meteor.meteorite_id%}">{{meteor.name}}</a></li>
+    <a class="list-group-item list-group-item-action text-primary py-2" href="{% url 'meteorites:detail_met' meteor.meteorite_id%}">{{meteor.name}}</a>
         {% endfor %}
     {% else %}
         Данные не найдены
 </ul>
     {% endif %}
+{% if user.is_authenticated %}
 <a class="btn btn-success" href="{% url 'meteorites:add_meteorite' %}" role="button">Добавить</a>
+{% endif %}
 {% endblock %}

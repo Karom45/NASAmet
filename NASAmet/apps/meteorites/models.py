@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 
 
@@ -31,7 +31,7 @@ class Meteorite(models.Model):
     recclass_id = models.ForeignKey('Classes' , db_column='recclass_id', on_delete = models.CASCADE)
     mass = models.FloatField('Масса', db_column='mass (g)')
     fall = models.CharField('Статус' , max_length=10, db_column='fall')
-    year = models.IntegerField('Дата', db_column='year')
+    year = models.DateTimeField('Дата', db_column='year')
     reclat = models.FloatField('Широта',db_column='reclat')
     reclong = models.FloatField('Долгота', db_column='reclong')
 
