@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Meteorite, Classes
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
+import datetime
+import pytz
 
 
 def index(request):
@@ -76,10 +78,14 @@ def change_meteorite(request ,meteor_id):
         meteor.recclass_id_id=request.POST['recclass_id_id']
         meteor.mass=request.POST['mass']
         meteor.fall=request.POST['fell']
-        meteor.year=request.POST['year']
+        meteor.year= datetime.datetime.strptime(request.POST['year'], '%Y-%m-%d')
         meteor.reclat=request.POST['reclat']
         meteor.reclong=request.POST['reclong']
         meteor.save()
+        # return render(request, 'meteorites/change_meteorite.html', {'meteor': meteor, 'class_names': class_names,
+        #                                                             'mass': int(meteor.mass),
+        #                                                             'reclat': str(meteor.reclat),
+        #                                                             'reclong': str(meteor.reclong)})
         return HttpResponseRedirect(reverse('meteorites:detail_met' , args=(meteor.meteorite_id,)))
     return render(request, 'meteorites/change_meteorite.html',{'meteor': meteor,'class_names': class_names,
                                                                'mass': int(meteor.mass) , 'reclat' : str(meteor.reclat),'reclong' : str(meteor.reclong)})
