@@ -12,5 +12,7 @@
         Данные не найдены
 </div>
     {% endif %}
+{% if user.is_authenticated %}
 <a class="btn btn-success" href="{% url 'meteorites:add_class' %}" role="button">Добавить</a>
+{% endif %}
 {% endblock %}
