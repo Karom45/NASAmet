@@ -11,8 +11,27 @@ def index(request):
 
 
 def meteorites_list(request):
-    meteor_list = Meteorite.objects.order_by('name')[:20]
-    return render(request, 'meteorites/list_meteorites.html', {'meteorites_list': meteor_list})
+    currentPage = 0
+    if request.GET.get('page'):
+        currentPage = int(request.GET.get('page')) - 1
+
+    ITEMS_PER_PAGE = 20
+    meteor_list = Meteorite.objects.order_by('name')[ITEMS_PER_PAGE*currentPage:ITEMS_PER_PAGE*currentPage+ITEMS_PER_PAGE]
+    pageCount = round(Meteorite.objects.all().count()/ITEMS_PER_PAGE + 0.5)
+    pages = []
+    if currentPage != 0:
+        pages.append({'name': 'Предыдущая', 'page': currentPage})
+    for i in range((pageCount - 10 if currentPage + 10 > pageCount else currentPage), (pageCount if currentPage + 10 > pageCount else currentPage + 10)):
+        if i > pageCount:
+            break
+        pages.append(
+            {'name': str(i + 1), 'page': i + 1, 'class': "active" if i == currentPage else ""})
+    if currentPage + 2 <= pageCount:
+        pages.append({'name': 'Следующая', 'page': currentPage + 2})
+
+
+    return render(request, 'meteorites/list_meteorites.html',
+                  {'meteorites_list': meteor_list, 'page_count': pageCount, 'current_page': currentPage + 1, 'pages': pages})
 
 
 def detail_met(request, meteor_id):
@@ -82,10 +101,6 @@ def change_meteorite(request ,meteor_id):
         meteor.reclat=request.POST['reclat']
         meteor.reclong=request.POST['reclong']
         meteor.save()
-        # return render(request, 'meteorites/change_meteorite.html', {'meteor': meteor, 'class_names': class_names,
-        #                                                             'mass': int(meteor.mass),
-        #                                                             'reclat': str(meteor.reclat),
-        #                                                             'reclong': str(meteor.reclong)})
         return HttpResponseRedirect(reverse('meteorites:detail_met' , args=(meteor.meteorite_id,)))
     return render(request, 'meteorites/change_meteorite.html',{'meteor': meteor,'class_names': class_names,
                                                                'mass': int(meteor.mass) , 'reclat' : str(meteor.reclat),'reclong' : str(meteor.reclong)})

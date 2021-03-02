@@ -12,7 +12,17 @@
         Данные не найдены
 </ul>
     {% endif %}
+<nav class="d-flex justify-content-center my-3" aria-label="Page navigation example">
+    {% if pages %}
+  <ul class="pagination">
+      {% for page in pages %}
+    <li class="page-item {{page.class}}"><a class="page-link" href="{% url 'meteorites:meteorites_list' %}?page={{page.page}}">{{page.name}}</a></li>
+      {% endfor %}
+  </ul>
+    {% endif %}
+</nav>
 {% if user.is_authenticated %}
 <a class="btn btn-success" href="{% url 'meteorites:add_meteorite' %}" role="button">Добавить</a>
 {% endif %}
+
 {% endblock %}
