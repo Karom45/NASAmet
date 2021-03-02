@@ -65,7 +65,7 @@ def add_meteorite(request):
                                mass=request.POST['mass'], fall=request.POST['fell'],
                                year=request.POST['year'], reclat=request.POST['reclat'], reclong=request.POST['reclong'])
         new_meteor.save()
-        return HttpResponseRedirect(reverse('meteorites:classes_list'))
+        return HttpResponseRedirect(reverse('meteorites:meteorites_list'))
     return render(request, 'meteorites/add_meteorite.html', {'class_names':class_names})
 
 
